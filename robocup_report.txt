@@ -1,0 +1,88 @@
+
+% Enter the names of your group members below.
+% If you only have 2 group members, leave the last space blank
+%
+%%%%%
+%%%%% NAME: Enes Polat
+%%%%% NAME: Akif Sipahi
+%%%%% NAME: Ekrem Yilmaz
+%
+
+%%%%% SECTION: cpu_details
+%%%%% Describe the system you ran your tests on below.
+%%%%% It should include information about the processor (mainly speed), 
+%%%%% amount of RAM, and operator system you ran your tests on.
+
+Processor: Intel(R) Core(TM) i5-10300H CPU @ 2.50GHz   2.50 GHz
+RAM: 8.00 GB
+Operating System: 64-bit operating system
+
+%%%%% SECTION: summary
+%%%%% Summarize your results in 5-10 sentences. Describe which states you tested on, 
+%%%%% which ones ran in a reasonable amount of time (and how long they took), and 
+%%%%% how much speedup you saw when using declarative heuristics. Report any other 
+%%%%% interesting behaviour you saw.
+
+I tested various goal states for all initial states using both regular and heuristic modes. The speedup achieved with declarative heuristics ranged from approximately 2.5 to 7 times faster, highlighting their effectiveness in optimizing computational efficiency. For example, goal state 14 took 0.20 seconds in regular mode and 0.11 seconds with heuristics, showing a significant improvement. Similarly, goal state 15 demonstrated a noticeable reduction in runtime, from 4.49 seconds in regular mode to 1.31 seconds with heuristics.
+
+Interestingly, simpler goal states like 11, 12, and 13 showed minimal or no runtime difference between regular and heuristic modes, as both returned results almost instantaneously. However, more complex states like 21, while showing improvement in runtime (0.22 seconds regular vs. 0.11 seconds heuristic), did not fully utilize the heuristics' potential due to their simpler structures compared to other complex states.
+
+A key observation emerged for more intricate states such as 22 and 31, which required significantly more computational time. These states, involving larger object domains and extended action sequences, took vastly longer than the expected range even with heuristics. This indicates that while the current heuristic strategies are well-suited for simpler and moderately complex goals, they are less effective for more sophisticated problem spaces. Addressing this issue would require implementing additional, specialized heuristics tailored to handle the increased complexity. Overall, while the existing heuristics provided substantial speedup for most states, their limitations for higher complexity scenarios highlight areas for further optimization.
+
+
+
+%%%%% SECTION: log
+%%%%% Show the actual queries you ran below, along with the output
+%%%%% This should include runtime and the actual plan found
+
+?- solve_problem(regular, 11, 2, Plan).
+Plan = [move(r1, 0, 0, 0, 1), move(r1, 1, 0, 0, 0)]
+Yes (0.00s cpu, solution 1, maybe more)
+
+?- solve_problem(heuristic, 11, 2, Plan).
+Plan = [move(r1, 0, 0, 0, 1), move(r1, 1, 0, 0, 0)]
+Yes (0.02s cpu, solution 1, maybe more)
+
+?- solve_problem(regular, 12, 2, Plan).
+Plan = [pass(r1, r2), move(r1, 1, 0, 0, 0)]
+Yes (0.00s cpu, solution 1, maybe more)
+
+?- solve_problem(heuristic, 12, 2, Plan).
+Plan = [pass(r1, r2), move(r1, 1, 0, 0, 0)]
+Yes (0.00s cpu, solution 1, maybe more)
+
+?- solve_problem(regular, 13, 4, Plan).
+Plan = [pass(r2, r3), pass(r1, r2), move(r3, 3, 1, 3, 2), move(r1, 1, 0, 0, 0)]
+Yes (0.00s cpu, solution 1, maybe more)
+
+?- solve_problem(heuristic, 13, 4, Plan).
+Plan = [pass(r2, r3), pass(r1, r2), move(r3, 3, 1, 3, 2), move(r1, 1, 0, 0, 0)]
+Yes (0.00s cpu, solution 1, maybe more)
+
+?- solve_problem(regular, 14, 6, Plan).
+Plan = [shoot(r3), move(r3, 3, 2, 3, 1), pass(r2, r3), pass(r1, r2), move(r3, 3, 1, 3, 2), move(r1, 1, 0, 0, 0)]
+Yes (0.20s cpu, solution 1, maybe more)
+
+?- solve_problem(heuristic, 14, 6, Plan).
+Plan = [shoot(r3), move(r3, 3, 2, 3, 1), pass(r2, r3), pass(r1, r2), move(r3, 3, 1, 3, 2), move(r1, 1, 0, 0, 0)]
+Yes (0.11s cpu, solution 1, maybe more)
+
+?- solve_problem(regular, 15, 8, Plan).
+Plan = [move(r1, 1, 2, 2, 2), move(r1, 0, 2, 1, 2), move(r1, 0, 1, 0, 2), move(r1, 0, 0, 0, 1), move(r2, 2, 2, 3, 2), move(r2, 1, 2, 2, 2), move(r2, 0, 2, 1, 2), move(r1, 1, 0, 0, 0)]
+Yes (4.49s cpu, solution 1, maybe more)
+
+?- solve_problem(heuristic, 15, 8, Plan).
+Plan = [move(r1, 1, 2, 2, 2), move(r1, 0, 2, 1, 2), move(r1, 0, 1, 0, 2), move(r1, 0, 0, 0, 1), move(r2, 2, 2, 3, 2), move(r2, 1, 2, 2, 2), move(r2, 0, 2, 1, 2), move(r1, 1, 0, 0, 0)]
+Yes (1.31s cpu, solution 1, maybe more)
+
+?- solve_problem(heuristic, 21, 6, Plan).
+Plan = [shoot(r3), move(r3, 3, 2, 3, 1), pass(r2, r3), pass(r1, r2), move(r3, 3, 1, 3, 2), move(r1, 1, 0, 0, 0)]
+Yes (0.11s cpu, solution 1, maybe more)
+
+?- solve_problem(regular, 21, 6, Plan).
+Plan = [shoot(r3), move(r3, 3, 2, 3, 1), pass(r2, r3), pass(r1, r2), move(r3, 3, 1, 3, 2), move(r1, 1, 0, 0, 0)]
+Yes (0.22s cpu, solution 1, maybe more)
+
+?- solve_problem(heuristic, 21, 8, Plan).
+Plan = [shoot(r3), move(r3, 3, 2, 3, 1), pass(r2, r3), pass(r1, r2), move(r3, 3, 1, 3, 2), move(r1, 1, 0, 0, 0)]
+Yes (0.11s cpu, solution 1, maybe more)

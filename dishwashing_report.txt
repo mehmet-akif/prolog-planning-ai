@@ -1,0 +1,74 @@
+
+% Enter the names of your group members below.
+% If you only have 2 group members, leave the last space blank
+%
+%%%%%
+%%%%% NAME: Enes Polat
+%%%%% NAME: Akif Sipahi
+%%%%% NAME: Ekrem Yilmaz
+%
+
+%%%%% SECTION: cpu_details
+%%%%% Describe the system you ran your tests on below.
+%%%%% It should include information about the processor (mainly speed), 
+%%%%% amount of RAM, and operator system you ran your tests on.
+
+Processor: Intel(R) Core(TM) i5-10300H CPU @ 2.50GHz   2.50 GHz
+RAM: 8.00 GB
+Operating System: 64-bit operating system
+
+%%%%% SECTION: summary
+%%%%% Summarize your results in 5-10 sentences. Describe which states you tested on, 
+%%%%% which ones ran in a reasonable amount of time (and how long they took), and 
+%%%%% how much speedup you saw when using declarative heuristics. Report any other 
+%%%%% interesting behaviour you saw.
+
+I tested various goal states using both regular mode and heuristic mode to compare performance. The speedup achieved with declarative heuristics ranged from 2.5 to 7 times faster for most goal states, demonstrating the effectiveness of heuristics in reducing computation time. For example, goal state 14 in regular mode took 36.27 seconds, slightly above the expected range of 10–30 seconds, while heuristic mode reduced this to 4.97 seconds. Goal state 21, surprisingly, took only 1.92 seconds in regular mode, far below the expected range of 10–40 seconds, indicating that the heuristics favored this goal state particularly well.
+
+For more complex goal states like 22 and 31, the results diverged significantly from the expected ranges. Goal state 22 took 2276.22 seconds (approximately 38 minutes), and goal state 31 required 1353.82 seconds (over 22 minutes), both vastly exceeding expected computational times. This suggests that while the implemented heuristics efficiently optimized simpler goal states, they struggled with the increased complexity of these states, which involve larger object domains and longer action plans.
+
+These results highlight the need for more sophisticated or additional heuristics tailored to handle higher complexity scenarios. The current heuristics performed well for simpler goal states, but they lacked the capacity to effectively minimize computational effort for the more intricate states, demonstrating a trade-off between simplicity and adaptability in heuristic design.
+
+%%%%% SECTION: log
+%%%%% Show the actual queries you ran below, along with the output
+%%%%% This should include runtime and the actual plan found
+
+?- solve_problem(regular, 11, 2, Plan).
+Plan = [addSoap(brush), pickUp(brush, counter)]
+Yes (0.00s cpu, solution 1, maybe more)
+
+?- solve_problem(regular, 12, 4, Plan).
+Plan = [putDown(brush, dish_rack), putDown(sponge, counter), pickUp(brush, counter), pickUp(sponge, dish_rack)]
+Yes (0.02s cpu, solution 1, maybe more)
+
+?- solve_problem(regular, 13, 6, Plan).
+Plan = [rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (0.59s cpu, solution 1, maybe more)
+
+?- solve_problem(regular, 14, 8, Plan).
+Plan = [turnOffFaucet, putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (36.27s cpu, solution 1, maybe more)
+
+?- solve_problem(heuristic, 14, 8, Plan).
+Plan = [turnOffFaucet, putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (4.97s cpu, solution 1, maybe more)
+
+?- solve_problem(heuristic, 15, 10, Plan).
+Plan = [turnOffFaucet, putDown(brush, dish_rack), rinse(brush), putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (107.47s cpu, solution 1, maybe more)
+
+?- solve_problem(regular, 21, 6, Plan).
+Plan = [rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), turnOnFaucet, pickUp(sponge, dish_rack)]
+Yes (1.92s cpu, solution 1, maybe more)
+
+?- solve_problem(heuristic, 21, 6, Plan).
+Plan = [rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), turnOnFaucet, pickUp(sponge, dish_rack)]
+Yes (0.54s cpu, solution 1, maybe more)
+
+?- solve_problem(heuristic, 22, 11, Plan).
+Plan = [putDown(p2, dish_rack), rinse(p2), scrub(p2, sponge), pickUp(p2, counter), putDown(p1, dish_rack), rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), turnOnFaucet, pickUp(sponge, dish_rack)]
+Yes (2276.22s cpu, solution 1, maybe more)
+
+?- solve_problem(heuristic, 31, 10, Plan).
+Plan = [putDown(p1, dish_rack), rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), putDown(g1, dish_rack), rinse(g1), pickUp(sponge, dish_rack), putDown(brush, counter), scrub(g1, brush)]
+Yes (1353.82s cpu, solution 1, maybe more)
